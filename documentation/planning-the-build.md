@@ -14,4 +14,25 @@ I am building the first iteration of this idea as a google chrome extension. Thi
 - Step 4: Write the background script that takes the summary from step 3, and evaluates it against the existing folder / sub-folder structure. The point of this is to find the most relevant folder to sort the page into.
   Step 5: Write the background script which based on the result of step 4 does one of the follwing: - Create a new folder - Create a new sub folder - Save the page inside the folder / sub folder. - Connect the page to other content (maybe version 2?)
 
-## Step 1:
+## Step 1: The manifest
+
+The manifest should is at the root folder of this project. It contains the meta data of the extension, permissions and more. In the nextjs folder structure, this should come inside public.
+
+- action: default popup should point to a html file in public titled popup.html
+- Permissions: active tab, storage, scripting
+- Service worker: background.js (which will asynchronously complete all the background tasks)
+- Content script: Should match all urls, and should point to content.js
+
+## Step 2: Content script
+
+I may have to use the programmatic injection here, since I only want the script to be triggered when a user presses a button. As for reading the content of the page, I would have to use the DOM api.
+
+## Step 3: Background script
+
+create a background.js fullfunction that you can call as a promise chain when the content script executes. Use an async function to chain the content script and the background script. (Step 4, and 5 can also just be other chains in the entire async process. But we can use status updates to inform the user e.g: reading page, summarizing page, analyzing folders, this page has been saved to /folder/subfolder/page)
+
+## Future Ideas:
+
+Adding an AI-powered tagging system for sub-categories.
+Syncing between devices via Google Drive or similar.
+Handling more media types like videos and images.
